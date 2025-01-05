@@ -87,7 +87,7 @@ fun SidebarAppListItem(
     appInfo: SidebarAppInfo,
     onCheckedChange: (Boolean) -> Unit
 ) {
-    val checked = remember { mutableStateOf(appInfo.isSidebarApp) }
+    val checked = rememberSaveable { mutableStateOf(appInfo.isSidebarApp) }
     SwitchPreference(
         model = object : SwitchPreferenceModel {
             override val title = appInfo.label
