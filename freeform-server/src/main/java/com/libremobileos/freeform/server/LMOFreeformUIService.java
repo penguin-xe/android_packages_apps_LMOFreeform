@@ -58,9 +58,6 @@ public class LMOFreeformUIService extends ILMOFreeformUIService.Stub {
     public void startAppInFreeform(
             String packageName, String activityName, int userId, int taskId,
             PendingIntent pendingIntent, int width, int height, int densityDpi) {
-        if (Binder.getCallingUid() != SYSTEM_UID) {
-            throw new SecurityException("Caller must be system");
-        }
         Slog.d(TAG, "startAppInLMOFreeform: " + packageName + "/" + activityName + ", taskId=" + taskId);
         FreeformWindowManager.addWindow(
                 handler, systemContext,
@@ -70,9 +67,6 @@ public class LMOFreeformUIService extends ILMOFreeformUIService.Stub {
 
     @Override
     public void removeFreeform(String freeformId) {
-        if (Binder.getCallingUid() != SYSTEM_UID) {
-            throw new SecurityException("Caller must be system");
-        }
         FreeformWindowManager.removeWindow(freeformId, true /*close*/);
     }
 
@@ -83,9 +77,6 @@ public class LMOFreeformUIService extends ILMOFreeformUIService.Stub {
             boolean shouldShowSystemDecorations, Surface surface,
             ILMOFreeformDisplayCallback callback
     ) {
-        if (Binder.getCallingUid() != SYSTEM_UID) {
-            throw new SecurityException("Caller must be system");
-        }
         displayManager.createFreeformLocked(
                 name, callback,
                 width, height, densityDpi,
@@ -96,25 +87,16 @@ public class LMOFreeformUIService extends ILMOFreeformUIService.Stub {
 
     @Override
     public void resizeFreeform(IBinder appToken, int width, int height, int densityDpi) {
-        if (Binder.getCallingUid() != SYSTEM_UID) {
-            throw new SecurityException("Caller must be system");
-        }
         displayManager.resizeFreeform(appToken, width, height, densityDpi);
     }
 
     @Override
     public void releaseFreeform(IBinder appToken) {
-        if (Binder.getCallingUid() != SYSTEM_UID) {
-            throw new SecurityException("Caller must be system");
-        }
         displayManager.releaseFreeform(appToken);
     }
 
     @Override
     public boolean ping() {
-        if (Binder.getCallingUid() != SYSTEM_UID) {
-            throw new SecurityException("Caller must be system");
-        }
         // need inputManager is not null
         return lmoFreeformService.isRunning();
     }
